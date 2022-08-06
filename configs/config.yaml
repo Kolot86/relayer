@@ -1,0 +1,52 @@
+global:
+    api-listen-addr: :5183
+    timeout: 10s
+    memo: Kolot#5637
+    light-cache-size: 20
+chains:
+    gaia:
+        type: cosmos
+        value:
+            key: wallet
+            chain-id: GAIA
+            rpc-addr: http://127.0.0.1:23657
+            account-prefix: cosmos
+            keyring-backend: test
+            gas-adjustment: 1.2
+            gas-prices: 0.001uatom
+            debug: true
+            timeout: 10s
+            output-format: json
+            sign-mode: direct
+    stride:
+        type: cosmos
+        value:
+            key: wallet
+            chain-id: STRIDE-TESTNET-2
+            rpc-addr: http://127.0.0.1:16657
+            account-prefix: stride
+            keyring-backend: test
+            gas-adjustment: 1.2
+            gas-prices: 0.001ustrd
+            debug: true
+            timeout: 10s
+            output-format: json
+            sign-mode: direct
+paths:
+    gaia-stride:
+        src:
+            chain-id: GAIA
+            client-id: 07-tendermint-0
+            connection-id: connection-0
+        dst:
+            chain-id: STRIDE-TESTNET-2
+            client-id: 07-tendermint-0
+            connection-id: connection-0
+        src-channel-filter:
+            rule: allowlist
+            channel-list:
+                - channel-0
+                - channel-1
+                - channel-2
+                - channel-3
+                - channel-4
