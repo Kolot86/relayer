@@ -14,11 +14,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const (
-	REPOURL  = "https://github.com/cosmos/relayer"
-	PATHSURL = "https://github.com/cosmos/relayer/tree/main/interchain"
-)
-
 func pathsCmd(a *appState) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "paths",
@@ -219,9 +214,9 @@ func pathsAddDirCmd(a *appState) *cobra.Command {
 		Short: `Add path configuration data in bulk from a directory. Example dir: 'configs/demo/paths'`,
 		Long: `Add path configuration data in bulk from a directory housing individual path config files. This is useful for spinning up testnets.
 		
-		See 'configs/demo/paths' for an example of individual path config files.`,
+		See 'examples/demo/configs/paths' for an example of individual path config files.`,
 		Example: strings.TrimSpace(fmt.Sprintf(`
-$ %s config add-paths configs/paths`, appName)),
+$ %s config add-paths examples/demo/configs/paths`, appName)),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			if err := addPathsFromDirectory(cmd.Context(), cmd.ErrOrStderr(), a, args[0]); err != nil {
 				return err
@@ -313,7 +308,7 @@ $ %s pth fch`, appName, defaultHome, appName)),
 				client, _, err := client.Repositories.DownloadContents(cmd.Context(), "cosmos", "chain-registry", regPath, nil)
 				if err != nil {
 					if errors.As(err, new(*github.RateLimitError)) {
-						fmt.Println("all paths were not added: %w", err)
+						fmt.Println("some paths failed: ", err)
 						break
 					}
 					fmt.Fprintf(cmd.ErrOrStderr(), "failure retrieving: %s: consider adding to cosmos/chain-registry: ERR: %v\n", pthName, err)
