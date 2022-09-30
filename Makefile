@@ -78,6 +78,18 @@ ibctest-docker-events:
 ibctest-docker-legacy:
 	cd ibctest && go test -race -v -run TestRelayerDockerLegacyProcessor .
 
+ibctest-events:
+	cd ibctest && go test -race -v -run TestRelayerEventProcessor .
+
+ibctest-legacy:
+	cd ibctest && go test -race -v -run TestRelayerLegacyProcessor .
+
+ibctest-multiple:
+	cd ibctest && go test -race -v -run TestRelayerMultiplePathsSingleProcess .
+
+ibctest-path-filter:
+	cd ibctest && go test -race -v -run TestPathFilter .
+
 coverage:
 	@echo "viewing test coverage..."
 	@go tool cover --html=coverage.out
